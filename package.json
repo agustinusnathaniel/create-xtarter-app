@@ -21,9 +21,10 @@
     "build": "tsdown",
     "dev": "tsdown --watch",
     "start": "node dist/cli.mjs",
+    "type-check": "tsc --noEmit",
     "check": "ultracite check",
     "fix": "ultracite fix",
-    "prepublishOnly": "pnpm build"
+    "prepublishOnly": "pnpm build && pnpm type-check"
   },
   "dependencies": {
     "@clack/prompts": "^1.1.0",

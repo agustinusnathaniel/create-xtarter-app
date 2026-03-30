@@ -26,7 +26,6 @@ export async function downloadTemplateFiles({
       dir: targetPath,
       force: true,
       offline,
-      name: template.id,
     });
 
     logger.success(`Template downloaded to ${targetPath}`);

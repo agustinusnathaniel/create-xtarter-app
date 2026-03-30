@@ -6,7 +6,7 @@ const packageManagerOptions = [
   { value: 'npm', label: 'npm', hint: 'Default Node.js' },
   { value: 'bun', label: 'bun', hint: 'Ultra-fast' },
   { value: 'yarn', label: 'yarn', hint: 'Classic choice' },
-] as const;
+];
 
 export async function promptPackageManager(selectedPm?: PackageManager): Promise<PackageManager> {
   // If package manager is provided via CLI flag, validate and return it

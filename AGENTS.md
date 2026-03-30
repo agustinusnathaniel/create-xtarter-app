@@ -2,15 +2,16 @@
 
 ## Build & Test
 ```bash
-pnpm build          # Build with tsdown
+pnpm build          # Build with tsdown (generates .d.ts)
+pnpm type-check     # TypeScript type checking
 pnpm start --help   # Test CLI
 node dist/cli.mjs test-app -t vite-tailwind --no-git  # Full test
 ```
 
 ## Code Quality
 ```bash
-pnpm biome:check    # Check code
-pnpm biome:fix      # Auto-fix
+pnpm check          # Biome lint/format (ultracite)
+pnpm fix            # Auto-fix issues
 ```
 
 ## Project Structure

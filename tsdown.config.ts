@@ -6,7 +6,7 @@ export default defineConfig({
   format: ['esm'],
   clean: true,
   sourcemap: false,
-  dts: true,
+  dts: true, // Generate .d.ts files
   minify: false,
   target: 'node18',
   platform: 'node',
