@@ -1,0 +1,64 @@
+{
+  "name": "create-xtarter-app",
+  "version": "0.1.0",
+  "description": "Fast project scaffolding for modern web apps",
+  "author": "agustinusnathaniel",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "create-xtarter-app": "./dist/cli.mjs"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "start": "node dist/cli.mjs",
+    "prepublishOnly": "pnpm build"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.1.0",
+    "chalk": "^5.6.2",
+    "citty": "^0.2.1",
+    "consola": "^3.4.2",
+    "fs-extra": "^11.3.4",
+    "giget": "^3.2.0",
+    "tinyexec": "^1.0.4",
+    "tinyglobby": "^0.2.15"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^25.5.0",
+    "tsdown": "^0.21.7",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "packageManager": "pnpm@10.24.0",
+  "keywords": [
+    "scaffold",
+    "starter",
+    "template",
+    "cli",
+    "nextjs",
+    "vite",
+    "react",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/agustinusnathaniel/create-xtarter-app"
+  },
+  "bugs": {
+    "url": "https://github.com/agustinusnathaniel/create-xtarter-app/issues"
+  },
+  "homepage": "https://github.com/agustinusnathaniel/create-xtarter-app#readme"
+}
