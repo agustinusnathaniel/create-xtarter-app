@@ -1,13 +1,13 @@
 export type TemplateProvider = 'github';
 
 export interface TemplateConfig {
+  branch: string;
+  description: string;
   id: string;
   name: string;
-  description: string;
-  repo: string;
-  branch: string;
-  provider: TemplateProvider;
   path?: string; // Optional subdirectory in repo
+  provider: TemplateProvider;
+  repo: string;
 }
 
 export const TEMPLATES: TemplateConfig[] = [

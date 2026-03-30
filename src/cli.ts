@@ -9,6 +9,7 @@ import consola from 'consola';
 import { APP_NAME, BANNER, HELP_TEXT, VERSION } from '@/constants';
 import { promptCleanCI, promptGitInit } from '@/prompts/options';
 import { promptPackageManager } from '@/prompts/package-manager';
+import { previewTemplate } from '@/prompts/preview';
 import { promptProjectName } from '@/prompts/project-name';
 import { promptTemplate } from '@/prompts/template';
 import type { PackageManager } from '@/types';
@@ -35,6 +36,12 @@ const mainCommand = defineCommand({
       description: 'Template to use',
       required: false,
     },
+    preview: {
+      type: 'boolean',
+      alias: 'P',
+      description: 'Preview template details',
+      required: false,
+    },
     pm: {
       type: 'string',
       alias: 'p',
@@ -51,6 +58,12 @@ const mainCommand = defineCommand({
       description: 'Remove CI/CD configs',
       required: false,
     },
+    yes: {
+      type: 'boolean',
+      alias: 'y',
+      description: 'Use defaults (pnpm, git init, no clean)',
+      required: false,
+    },
     help: {
       type: 'boolean',
       alias: 'h',
@@ -64,6 +77,7 @@ const mainCommand = defineCommand({
       required: false,
     },
   },
+  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: CLI run function orchestrates multiple steps
   async run(ctx) {
     const args = ctx.args;
 
@@ -79,14 +93,26 @@ const mainCommand = defineCommand({
       return;
     }
 
+    // Handle preview flag
+    if (args.preview) {
+      await previewTemplate(args.template as string | undefined);
+      return;
+    }
+
     // Show banner
     console.log(BANNER);
+
+    // Handle --yes flag: use defaults
+    const useDefaults = args.yes === true;
+    const defaultPackageManager: PackageManager = 'pnpm';
+    const defaultGitInit = !args.noGit;
+    const defaultCleanCI = false;
 
     try {
       // Start the scaffolding process
       intro(`${APP_NAME} - Let's create your project!`);
 
-      // 1. Get project name
+      // 1. Get project name (required)
       let projectName = args.name;
       if (!projectName) {
         projectName = await promptProjectName();
@@ -105,14 +131,16 @@ const mainCommand = defineCommand({
         }
       }
 
-      // 2. Get template
+      // 2. Get template (always prompt unless specified)
       const template = await promptTemplate(args.template as string | undefined);
 
-      // 3. Get package manager
-      const packageManager = await promptPackageManager(args.pm as PackageManager | undefined);
+      // 3. Get package manager (use default if --yes)
+      const packageManager = useDefaults
+        ? defaultPackageManager
+        : await promptPackageManager(args.pm as PackageManager | undefined);
 
-      // 4. Git initialization option
-      const shouldInitGit = await promptGitInit(args.noGit);
+      // 4. Git initialization (use default if --yes)
+      const shouldInitGit = useDefaults ? defaultGitInit : await promptGitInit(args.noGit);
 
       // Check if git is installed if user wants git init
       if (shouldInitGit) {
@@ -122,8 +150,8 @@ const mainCommand = defineCommand({
         }
       }
 
-      // 5. Clean CI configs option
-      const shouldCleanCI = await promptCleanCI(args.clean);
+      // 5. Clean CI configs (use default if --yes)
+      const shouldCleanCI = useDefaults ? defaultCleanCI : await promptCleanCI(args.clean);
 
       // Note: Summary of choices
       note(

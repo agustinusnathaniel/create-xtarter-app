@@ -4,8 +4,8 @@ import { pathExists, readJSON, remove, writeJSON } from 'fs-extra/esm';
 import { glob } from 'tinyglobby';
 
 export interface ModifyPackageOptions {
-  projectPath: string;
   projectName: string;
+  projectPath: string;
 }
 
 export async function modifyPackageJson({

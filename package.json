@@ -22,9 +22,11 @@
     "dev": "tsdown --watch",
     "start": "node dist/cli.mjs",
     "type-check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "check": "ultracite check",
     "fix": "ultracite fix",
-    "prepublishOnly": "pnpm build && pnpm type-check"
+    "prepublishOnly": "pnpm build && pnpm type-check && pnpm test"
   },
   "dependencies": {
     "@clack/prompts": "^1.1.0",
@@ -42,7 +44,8 @@
     "@types/node": "^25.5.0",
     "tsdown": "^0.21.7",
     "typescript": "^6.0.2",
-    "ultracite": "7.4.0"
+    "ultracite": "7.4.0",
+    "vitest": "^4.1.2"
   },
   "engines": {
     "node": ">=18.0.0"

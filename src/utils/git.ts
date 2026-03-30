@@ -2,8 +2,8 @@ import consola from 'consola';
 import { exec } from 'tinyexec';
 
 export interface GitInitOptions {
-  projectPath: string;
   message?: string;
+  projectPath: string;
 }
 
 export async function initializeGit({
