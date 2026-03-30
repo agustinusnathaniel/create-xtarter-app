@@ -1,9 +1,9 @@
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { styleText } from 'node:util';
 import { cancel, intro, note, outro } from '@clack/prompts';
 import { defineCommand, runMain } from 'citty';
 import consola from 'consola';
-import pc from 'picocolors';
 import { APP_NAME, BANNER, HELP_TEXT, VERSION } from '@/constants';
 import { promptCleanCI, promptGitInit } from '@/prompts/options';
 import { promptPackageManager } from '@/prompts/package-manager';
@@ -154,11 +154,11 @@ const mainCommand = defineCommand({
       // Note: Summary of choices
       note(
         [
-          `Project: ${pc.cyan(projectName)}`,
-          `Template: ${pc.cyan(template.name)}`,
-          `Package Manager: ${pc.cyan(packageManager)}`,
-          `Git Init: ${pc.cyan(shouldInitGit ? 'Yes' : 'No')}`,
-          `Clean CI/CD: ${pc.cyan(shouldCleanCI ? 'Yes' : 'No')}`,
+          `Project: ${styleText('cyan', projectName)}`,
+          `Template: ${styleText('cyan', template.name)}`,
+          `Package Manager: ${styleText('cyan', packageManager)}`,
+          `Git Init: ${styleText('cyan', shouldInitGit ? 'Yes' : 'No')}`,
+          `Clean CI/CD: ${styleText('cyan', shouldCleanCI ? 'Yes' : 'No')}`,
         ].join('\n'),
         'Scaffolding with these settings'
       );
@@ -195,20 +195,20 @@ const mainCommand = defineCommand({
       }
 
       // Success!
-      outro(pc.green(`🎉 Successfully created ${pc.cyan(projectName)}!`));
+      outro(styleText('green', `🎉 Successfully created ${styleText('cyan', projectName)}!`));
 
       // Display next steps
-      console.log(`\n${pc.bold('Next steps:')}
-  ${pc.gray('1.')} ${pc.cyan(`cd ${projectName}`)}
-  ${pc.gray('2.')} ${pc.cyan(`${packageManager} dev`)}
-  ${pc.gray('3.')} Open ${pc.cyan('http://localhost:3000')} (or the port shown)
+      console.log(`\n${styleText('bold', 'Next steps:')}
+  ${styleText('gray', '1.')} ${styleText('cyan', `cd ${projectName}`)}
+  ${styleText('gray', '2.')} ${styleText('cyan', `${packageManager} dev`)}
+  ${styleText('gray', '3.')} Open ${styleText('cyan', 'http://localhost:3000')} (or the port shown)
 
-${pc.bold('Template:')} ${template.name}
-${pc.bold('Docs:')} ${pc.underline(`https://github.com/${template.repo}`)}
+${styleText('bold', 'Template:')} ${template.name}
+${styleText('bold', 'Docs:')} ${styleText('underline', `https://github.com/${template.repo}`)}
 `);
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown error';
-      cancel(`${pc.red('Error:')} ${message}`);
+      cancel(`${styleText('red', 'Error:')} ${message}`);
       process.exit(1);
     }
   },
