@@ -27,7 +27,9 @@
     "ultracite:check": "ultracite check",
     "ultracite:fix": "ultracite fix",
     "check:all": "turbo run type-check test ultracite:check",
-    "prepublishOnly": "pnpm build && pnpm type-check && pnpm test"
+    "prepublishOnly": "turbo run build",
+    "up-interactive": "pnpm up -i",
+    "up-latest": "pnpm up-interactive -L"
   },
   "dependencies": {
     "@clack/prompts": "^1.1.0",
