@@ -1,11 +1,9 @@
-#!/usr/bin/env node
-
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { cancel, intro, note, outro } from '@clack/prompts';
-import chalk from 'chalk';
 import { defineCommand, runMain } from 'citty';
 import consola from 'consola';
+import pc from 'picocolors';
 import { APP_NAME, BANNER, HELP_TEXT, VERSION } from '@/constants';
 import { promptCleanCI, promptGitInit } from '@/prompts/options';
 import { promptPackageManager } from '@/prompts/package-manager';
@@ -156,11 +154,11 @@ const mainCommand = defineCommand({
       // Note: Summary of choices
       note(
         [
-          `Project: ${chalk.cyan(projectName)}`,
-          `Template: ${chalk.cyan(template.name)}`,
-          `Package Manager: ${chalk.cyan(packageManager)}`,
-          `Git Init: ${chalk.cyan(shouldInitGit ? 'Yes' : 'No')}`,
-          `Clean CI/CD: ${chalk.cyan(shouldCleanCI ? 'Yes' : 'No')}`,
+          `Project: ${pc.cyan(projectName)}`,
+          `Template: ${pc.cyan(template.name)}`,
+          `Package Manager: ${pc.cyan(packageManager)}`,
+          `Git Init: ${pc.cyan(shouldInitGit ? 'Yes' : 'No')}`,
+          `Clean CI/CD: ${pc.cyan(shouldCleanCI ? 'Yes' : 'No')}`,
         ].join('\n'),
         'Scaffolding with these settings'
       );
@@ -197,20 +195,20 @@ const mainCommand = defineCommand({
       }
 
       // Success!
-      outro(chalk.green(`🎉 Successfully created ${chalk.cyan(projectName)}!`));
+      outro(pc.green(`🎉 Successfully created ${pc.cyan(projectName)}!`));
 
       // Display next steps
-      console.log(`\n${chalk.bold('Next steps:')}
-  ${chalk.gray('1.')} ${chalk.cyan(`cd ${projectName}`)}
-  ${chalk.gray('2.')} ${chalk.cyan(`${packageManager} dev`)}
-  ${chalk.gray('3.')} Open ${chalk.cyan('http://localhost:3000')} (or the port shown)
+      console.log(`\n${pc.bold('Next steps:')}
+  ${pc.gray('1.')} ${pc.cyan(`cd ${projectName}`)}
+  ${pc.gray('2.')} ${pc.cyan(`${packageManager} dev`)}
+  ${pc.gray('3.')} Open ${pc.cyan('http://localhost:3000')} (or the port shown)
 
-${chalk.bold('Template:')} ${template.name}
-${chalk.bold('Docs:')} ${chalk.underline(`https://github.com/${template.repo}`)}
+${pc.bold('Template:')} ${template.name}
+${pc.bold('Docs:')} ${pc.underline(`https://github.com/${template.repo}`)}
 `);
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown error';
-      cancel(`${chalk.red('Error:')} ${message}`);
+      cancel(`${pc.red('Error:')} ${message}`);
       process.exit(1);
     }
   },

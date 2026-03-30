@@ -1,11 +1,20 @@
+import { access, readFile, rm, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import consola from 'consola';
-import { pathExists, readJSON, remove, writeJSON } from 'fs-extra/esm';
 import { glob } from 'tinyglobby';
 
 export interface ModifyPackageOptions {
   projectName: string;
   projectPath: string;
+}
+
+async function pathExists(path: string): Promise<boolean> {
+  try {
+    await access(path);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export async function modifyPackageJson({
@@ -25,7 +34,8 @@ export async function modifyPackageJson({
       return;
     }
 
-    const packageJson = await readJSON(packageJsonPath);
+    const content = await readFile(packageJsonPath, 'utf-8');
+    const packageJson = JSON.parse(content);
 
     // Update package name
     packageJson.name = projectName.toLowerCase().replace(/[^a-z0-9-]/g, '-');
@@ -40,7 +50,7 @@ export async function modifyPackageJson({
       }
     }
 
-    await writeJSON(packageJsonPath, packageJson, { spaces: 2 });
+    await writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2), 'utf-8');
 
     logger.success('package.json updated');
   } catch (error) {
@@ -81,7 +91,7 @@ export async function cleanCIConfigs({ projectPath }: CleanOptions): Promise<voi
       const exists = await pathExists(fullPath);
 
       if (exists) {
-        await remove(fullPath);
+        await rm(fullPath, { recursive: true, force: true });
         removedCount++;
       }
     }
@@ -94,7 +104,7 @@ export async function cleanCIConfigs({ projectPath }: CleanOptions): Promise<voi
 
     for (const file of workflowFiles) {
       const fullPath = join(projectPath, file);
-      await remove(fullPath);
+      await rm(fullPath, { recursive: true, force: true });
       removedCount++;
     }
 

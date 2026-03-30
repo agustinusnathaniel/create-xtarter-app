@@ -1,5 +1,5 @@
 import { cancel, isCancel, text } from '@clack/prompts';
-import chalk from 'chalk';
+import pc from 'picocolors';
 import { getTemplateById, TEMPLATES } from '@/templates/registry';
 
 export async function previewTemplate(templateId?: string): Promise<void> {
@@ -31,28 +31,28 @@ export async function previewTemplate(templateId?: string): Promise<void> {
 
   const template = getTemplateById(selectedTemplateId);
   if (!template) {
-    console.log(chalk.red(`✖ Template "${selectedTemplateId}" not found`));
-    console.log(chalk.yellow(`Available templates: ${TEMPLATES.map((t) => t.id).join(', ')}`));
+    console.log(pc.red(`✖ Template "${selectedTemplateId}" not found`));
+    console.log(pc.yellow(`Available templates: ${TEMPLATES.map((t) => t.id).join(', ')}`));
     process.exit(1);
   }
 
   // Display template info
-  console.log(`\n${chalk.bold.cyan('═'.repeat(60))}`);
-  console.log(chalk.bold.white(`  ${template.name}`));
-  console.log(chalk.bold.cyan('═'.repeat(60)));
+  console.log(`\n${pc.bold(pc.cyan('═'.repeat(60)))}`);
+  console.log(pc.bold(pc.white(`  ${template.name}`)));
+  console.log(pc.bold(pc.cyan('═'.repeat(60))));
   console.log();
-  console.log(`${chalk.gray('ID:')}  ${template.id}`);
-  console.log(chalk.gray('Description:'));
+  console.log(`${pc.gray('ID:')}  ${template.id}`);
+  console.log(pc.gray('Description:'));
   console.log(`  ${template.description}`);
   console.log();
-  console.log(chalk.gray('Repository:'));
+  console.log(pc.gray('Repository:'));
   console.log(`  https://github.com/${template.repo}`);
   console.log();
-  console.log(`${chalk.gray('Branch:')}  ${template.branch}`);
+  console.log(`${pc.gray('Branch:')}  ${template.branch}`);
   console.log();
 
   // Show what's included (based on template)
-  console.log(chalk.bold('Features:'));
+  console.log(pc.bold('Features:'));
 
   const featureMap: Record<string, string[]> = {
     'next-chakra': ['Next.js 16', 'Chakra UI v3', 'Biome', 'Turborepo', 'TypeScript', 'Playwright'],
@@ -80,13 +80,13 @@ export async function previewTemplate(templateId?: string): Promise<void> {
 
   const features = featureMap[template.id] || ['See repository for details'];
   for (const feature of features) {
-    console.log(`${chalk.green('  ✔')} ${feature}`);
+    console.log(`${pc.green('  ✔')} ${feature}`);
   }
 
   console.log();
-  console.log(chalk.bold('Usage:'));
-  console.log(`  ${chalk.cyan(`npx create-xtarter-app my-app -t ${template.id}`)}`);
+  console.log(pc.bold('Usage:'));
+  console.log(`  ${pc.cyan(`npx create-xtarter-app my-app -t ${template.id}`)}`);
   console.log();
-  console.log(chalk.bold.cyan('═'.repeat(60)));
+  console.log(pc.bold(pc.cyan('═'.repeat(60))));
   console.log();
 }
