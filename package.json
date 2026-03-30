@@ -29,7 +29,8 @@
     "check:all": "turbo run type-check test ultracite:check",
     "prepublishOnly": "turbo run build",
     "up-interactive": "pnpm up -i",
-    "up-latest": "pnpm up-interactive -L"
+    "up-latest": "pnpm up-interactive -L",
+    "release": "commit-and-tag-version"
   },
   "dependencies": {
     "@clack/prompts": "^1.1.0",
