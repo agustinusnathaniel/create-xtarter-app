@@ -8,14 +8,14 @@ describe('Template Registry', () => {
     });
 
     it('should have valid template structure', () => {
-      TEMPLATES.forEach((template) => {
+      for (const template of TEMPLATES) {
         expect(template.id).toBeDefined();
         expect(template.name).toBeDefined();
         expect(template.description).toBeDefined();
         expect(template.repo).toBeDefined();
         expect(template.branch).toBe('main');
         expect(template.provider).toBe('github');
-      });
+      }
     });
   });
 
@@ -46,12 +46,12 @@ describe('Template Registry', () => {
 
     it('should have value and label for each choice', () => {
       const choices = getTemplateChoices();
-      choices.forEach((choice) => {
+      for (const choice of choices) {
         expect(choice).toHaveProperty('value');
         expect(choice).toHaveProperty('label');
         expect(typeof choice.value).toBe('string');
         expect(typeof choice.label).toBe('string');
-      });
+      }
     });
 
     it('should include template name in label', () => {

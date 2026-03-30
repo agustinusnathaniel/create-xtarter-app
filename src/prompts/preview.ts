@@ -3,8 +3,10 @@ import chalk from 'chalk';
 import { getTemplateById, TEMPLATES } from '@/templates/registry';
 
 export async function previewTemplate(templateId?: string): Promise<void> {
+  let selectedTemplateId = templateId;
+
   // If template not provided, prompt for it
-  if (!templateId) {
+  if (!selectedTemplateId) {
     const result = await text({
       message: 'Which template would you like to preview?',
       placeholder: 'vite-tailwind',
@@ -24,29 +26,29 @@ export async function previewTemplate(templateId?: string): Promise<void> {
       process.exit(0);
     }
 
-    templateId = result.trim();
+    selectedTemplateId = result.trim();
   }
 
-  const template = getTemplateById(templateId);
+  const template = getTemplateById(selectedTemplateId);
   if (!template) {
-    console.log(chalk.red(`✖ Template "${templateId}" not found`));
+    console.log(chalk.red(`✖ Template "${selectedTemplateId}" not found`));
     console.log(chalk.yellow(`Available templates: ${TEMPLATES.map((t) => t.id).join(', ')}`));
     process.exit(1);
   }
 
   // Display template info
-  console.log('\n' + chalk.bold.cyan('═'.repeat(60)));
+  console.log(`\n${chalk.bold.cyan('═'.repeat(60))}`);
   console.log(chalk.bold.white(`  ${template.name}`));
   console.log(chalk.bold.cyan('═'.repeat(60)));
   console.log();
-  console.log(chalk.gray('ID:') + `  ${template.id}`);
+  console.log(`${chalk.gray('ID:')}  ${template.id}`);
   console.log(chalk.gray('Description:'));
   console.log(`  ${template.description}`);
   console.log();
   console.log(chalk.gray('Repository:'));
   console.log(`  https://github.com/${template.repo}`);
   console.log();
-  console.log(chalk.gray('Branch:') + `  ${template.branch}`);
+  console.log(`${chalk.gray('Branch:')}  ${template.branch}`);
   console.log();
 
   // Show what's included (based on template)
@@ -77,9 +79,9 @@ export async function previewTemplate(templateId?: string): Promise<void> {
   };
 
   const features = featureMap[template.id] || ['See repository for details'];
-  features.forEach((feature) => {
-    console.log(chalk.green('  ✔') + ` ${feature}`);
-  });
+  for (const feature of features) {
+    console.log(`${chalk.green('  ✔')} ${feature}`);
+  }
 
   console.log();
   console.log(chalk.bold('Usage:'));

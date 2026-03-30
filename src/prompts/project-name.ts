@@ -1,5 +1,7 @@
 import { cancel, isCancel, text } from '@clack/prompts';
 
+const PROJECT_NAME_REGEX = /^[a-zA-Z0-9-_]+$/;
+
 export async function promptProjectName(defaultValue?: string): Promise<string> {
   const result = await text({
     message: 'What is your project named?',
@@ -9,7 +11,7 @@ export async function promptProjectName(defaultValue?: string): Promise<string> 
       if (!value || value.trim().length === 0) {
         return 'Project name is required';
       }
-      if (!/^[a-zA-Z0-9-_]+$/.test(value)) {
+      if (!PROJECT_NAME_REGEX.test(value)) {
         return 'Name can only contain letters, numbers, hyphens, and underscores';
       }
       if (value.length > 214) {
