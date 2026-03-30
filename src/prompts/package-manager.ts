@@ -1,5 +1,5 @@
-import { select, isCancel, cancel } from '@clack/prompts';
-import type { PackageManager } from '../types';
+import { cancel, isCancel, select } from '@clack/prompts';
+import type { PackageManager } from '@/types';
 
 const packageManagerOptions = [
   { value: 'pnpm', label: 'pnpm (recommended)', hint: 'Fast, disk-efficient' },

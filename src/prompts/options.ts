@@ -1,4 +1,4 @@
-import { confirm, isCancel, cancel } from '@clack/prompts';
+import { cancel, confirm, isCancel } from '@clack/prompts';
 
 export async function promptGitInit(skipGit?: boolean): Promise<boolean> {
   // If --no-git flag is provided, skip git initialization

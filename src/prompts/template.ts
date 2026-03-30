@@ -1,6 +1,6 @@
-import { select, isCancel, cancel } from '@clack/prompts';
-import { getTemplateChoices, getTemplateById } from '../templates/registry';
-import type { TemplateConfig } from '../templates/registry';
+import { cancel, isCancel, select } from '@clack/prompts';
+import type { TemplateConfig } from '@/templates/registry';
+import { getTemplateById, getTemplateChoices } from '@/templates/registry';
 
 export async function promptTemplate(selectedTemplate?: string): Promise<TemplateConfig> {
   // If template is provided via CLI flag, validate and return it
@@ -10,9 +10,7 @@ export async function promptTemplate(selectedTemplate?: string): Promise<Templat
       const validTemplates = getTemplateChoices()
         .map((t) => t.value)
         .join(', ');
-      throw new Error(
-        `Unknown template "${selectedTemplate}". Valid options: ${validTemplates}`
-      );
+      throw new Error(`Unknown template "${selectedTemplate}". Valid options: ${validTemplates}`);
     }
     return template;
   }

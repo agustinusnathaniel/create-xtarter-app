@@ -1,5 +1,5 @@
-import { exec } from 'tinyexec';
 import consola from 'consola';
+import { exec } from 'tinyexec';
 
 export interface GitInitOptions {
   projectPath: string;

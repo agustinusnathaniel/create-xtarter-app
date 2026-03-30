@@ -1,6 +1,6 @@
-import { pathExists, readJSON, writeJSON, remove } from 'fs-extra/esm';
 import { join } from 'node:path';
 import consola from 'consola';
+import { pathExists, readJSON, remove, writeJSON } from 'fs-extra/esm';
 import { glob } from 'tinyglobby';
 
 export interface ModifyPackageOptions {

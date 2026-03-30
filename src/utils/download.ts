@@ -1,6 +1,6 @@
-import { downloadTemplate } from 'giget';
-import type { TemplateConfig } from '../templates/registry';
 import consola from 'consola';
+import { downloadTemplate } from 'giget';
+import type { TemplateConfig } from '@/templates/registry';
 
 export interface DownloadOptions {
   template: TemplateConfig;

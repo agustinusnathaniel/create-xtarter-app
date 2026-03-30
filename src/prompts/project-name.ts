@@ -1,5 +1,4 @@
-import { text, isCancel, cancel } from '@clack/prompts';
-import chalk from 'chalk';
+import { cancel, isCancel, text } from '@clack/prompts';
 
 export async function promptProjectName(defaultValue?: string): Promise<string> {
   const result = await text({

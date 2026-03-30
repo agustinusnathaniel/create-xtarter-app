@@ -1,21 +1,21 @@
 #!/usr/bin/env node
 
-import { defineCommand, runMain } from 'citty';
-import { intro, outro, isCancel, cancel, note } from '@clack/prompts';
-import chalk from 'chalk';
-import consola from 'consola';
-import { join, resolve } from 'node:path';
 import { existsSync } from 'node:fs';
-import { BANNER, HELP_TEXT, VERSION, APP_NAME } from './constants';
-import type { CliOptions, PackageManager } from './types';
-import { promptProjectName } from './prompts/project-name';
-import { promptTemplate } from './prompts/template';
-import { promptPackageManager } from './prompts/package-manager';
-import { promptGitInit, promptCleanCI } from './prompts/options';
-import { downloadTemplateFiles } from './utils/download';
-import { modifyPackageJson, cleanCIConfigs } from './utils/modify-package';
-import { initializeGit, isGitInstalled } from './utils/git';
-import { installDependencies } from './utils/install';
+import { resolve } from 'node:path';
+import { cancel, intro, note, outro } from '@clack/prompts';
+import chalk from 'chalk';
+import { defineCommand, runMain } from 'citty';
+import consola from 'consola';
+import { APP_NAME, BANNER, HELP_TEXT, VERSION } from '@/constants';
+import { promptCleanCI, promptGitInit } from '@/prompts/options';
+import { promptPackageManager } from '@/prompts/package-manager';
+import { promptProjectName } from '@/prompts/project-name';
+import { promptTemplate } from '@/prompts/template';
+import type { PackageManager } from '@/types';
+import { downloadTemplateFiles } from '@/utils/download';
+import { initializeGit, isGitInstalled } from '@/utils/git';
+import { installDependencies } from '@/utils/install';
+import { cleanCIConfigs, modifyPackageJson } from '@/utils/modify-package';
 
 const mainCommand = defineCommand({
   meta: {
@@ -109,9 +109,7 @@ const mainCommand = defineCommand({
       const template = await promptTemplate(args.template as string | undefined);
 
       // 3. Get package manager
-      const packageManager = await promptPackageManager(
-        args.pm as PackageManager | undefined
-      );
+      const packageManager = await promptPackageManager(args.pm as PackageManager | undefined);
 
       // 4. Git initialization option
       const shouldInitGit = await promptGitInit(args.noGit);
@@ -171,9 +169,7 @@ const mainCommand = defineCommand({
       }
 
       // Success!
-      outro(
-        chalk.green(`🎉 Successfully created ${chalk.cyan(projectName)}!`)
-      );
+      outro(chalk.green(`🎉 Successfully created ${chalk.cyan(projectName)}!`));
 
       // Display next steps
       console.log(`\n${chalk.bold('Next steps:')}

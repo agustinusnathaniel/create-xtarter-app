@@ -1,7 +1,6 @@
-import { exec } from 'tinyexec';
-import type { PackageManager } from '../types';
 import consola from 'consola';
-import { join } from 'node:path';
+import { exec } from 'tinyexec';
+import type { PackageManager } from '@/types';
 
 export interface InstallOptions {
   packageManager: PackageManager;
