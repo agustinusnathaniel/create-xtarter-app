@@ -21,8 +21,8 @@
     "build": "tsdown",
     "dev": "tsdown --watch",
     "start": "node dist/cli.mjs",
-    "biome:check": "biome check",
-    "biome:fix": "biome check --write",
+    "check": "ultracite check",
+    "fix": "ultracite fix",
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
@@ -36,12 +36,12 @@
     "tinyglobby": "^0.2.15"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.9",
+    "@biomejs/biome": "2.4.9",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^25.5.0",
     "tsdown": "^0.21.7",
     "typescript": "^6.0.2",
-    "ultracite": "^7.4.0"
+    "ultracite": "7.4.0"
   },
   "engines": {
     "node": ">=18.0.0"

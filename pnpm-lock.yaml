@@ -34,7 +34,7 @@ importers:
         version: 0.2.15
     devDependencies:
       '@biomejs/biome':
-        specifier: ^2.4.9
+        specifier: 2.4.9
         version: 2.4.9
       '@types/fs-extra':
         specifier: ^11.0.4
@@ -49,7 +49,7 @@ importers:
         specifier: ^6.0.2
         version: 6.0.2
       ultracite:
-        specifier: ^7.4.0
+        specifier: 7.4.0
         version: 7.4.0
 
 packages:
