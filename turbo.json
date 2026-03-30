@@ -1,0 +1,15 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "type-check": {
+      "outputs": ["*.tsbuildinfo"]
+    },
+    "ultracite:check": {
+      "outputs": [],
+      "inputs": ["biome.json", "src/**"]
+    },
+    "test": {
+      "inputs": ["vitest.config.ts", "src/**"]
+    }
+  }
+}
