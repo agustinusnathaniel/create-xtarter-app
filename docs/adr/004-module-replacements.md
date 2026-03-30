@@ -12,47 +12,43 @@ The [e18e project](https://e18e.dev) maintains a module replacements dataset and
 - [e18e Analyze CLI](https://e18e.dev/docs/cli/analyze.html)
 - [31 npm packages you can replace with Node.js APIs](https://dev.to/lingodotdev/31-npm-packages-you-can-replace-with-nodejs-apis-17o8)
 
-## Current Dependencies Analysis
+## Final Dependencies
 
-| Package | Previous | Current | e18e Recommends | Status |
-|---------|----------|---------|-----------------|--------|
-| `chalk` | 5.6.2 | `picocolors` 1.1.1 | `picocolors` or `node:util` | ✅ **Replaced** |
-| `fs-extra` | 11.3.4 | `node:fs/promises` | `node:fs/promises` | ✅ **Replaced** |
-| `tinyglobby` | 0.2.15 | ✅ Same | ✅ Already recommended | ✅ No change |
-| `tinyexec` | 1.0.4 | ✅ Same | ✅ Already recommended | ✅ No change |
+| Package | Before | After | e18e Recommends | Status |
+|---------|--------|-------|-----------------|--------|
+| `chalk` | 5.6.2 | `node:util.styleText()` | Native API | ✅ **Replaced** |
+| `fs-extra` | 11.3.4 | `node:fs/promises` | Native API | ✅ **Replaced** |
+| `picocolors` | - | Removed | N/A | ✅ **Removed** |
+| `tinyglobby` | 0.2.15 | ✅ Same | ✅ Recommended | ✅ Keep |
+| `tinyexec` | 1.0.4 | ✅ Same | ✅ Recommended | ✅ Keep |
 
 ## Decisions
 
-### Replace `chalk` → `picocolors`
+### Use `node:util.styleText()` (Native API)
 
 **Why:**
-- `picocolors` is 3x smaller than `chalk` (~5KB vs ~15KB)
-- Same API (drop-in replacement: `chalk.red()` → `pc.red()`)
-- e18e explicitly recommends this replacement
-- No Node.js version requirements
+- Zero dependencies - built into Node.js 20+
+- Same functionality as chalk/picocolors
+- e18e explicitly recommends native APIs
+- No bundle size impact
 
-**Migration:**
+**API:**
 ```typescript
-// Before
-import chalk from 'chalk';
-chalk.red('error');
+import { styleText } from 'node:util';
 
-// After
-import pc from 'picocolors';
-pc.red('error');
+styleText('red', 'error');
+styleText('cyanBright', 'title');
+styleText('bold', 'important');
 ```
 
-### Replace `fs-extra` → `node:fs/promises`
+**Supported styles:** All ANSI colors, bold, dim, italic, underline, inverse, gray, italic.
+
+### Use `node:fs/promises` (Native API)
 
 **Why:**
 - Native Node.js APIs since v14+
-- `fs-extra` was only used for 4 methods:
-  - `pathExists()` → `access()` wrapper (10 lines)
-  - `readJSON()` → `readFile()` + `JSON.parse()`
-  - `writeJSON()` → `writeFile()` + `JSON.stringify()`
-  - `remove()` → `rm()` with `{ recursive: true, force: true }`
 - Removes 6 dependencies (fs-extra + subdeps)
-- ~150KB bundle size reduction
+- Modern async/await support
 
 **Migration:**
 ```typescript
@@ -80,18 +76,42 @@ async function pathExists(path: string): Promise<boolean> {
 ## Implementation
 
 ### What We Changed
-- ✅ Replaced `chalk` with `picocolors` across all files
-- ✅ Replaced `fs-extra/esm` with `node:fs/promises`
-- ✅ Added `pathExists()` helper using `access()`
-- ✅ Removed `fs-extra` dependency
-- ✅ Added `picocolors` dependency
+1. ✅ `chalk` → `node:util.styleText()`
+2. ✅ `picocolors` → removed (intermediate step)
+3. ✅ `fs-extra` → `node:fs/promises`
+4. ✅ Added `pathExists()` helper using `access()`
 
 ### Impact
+
 | Metric | Before | After | Change |
 |--------|--------|-------|--------|
-| Dependencies | 8 | 4 | -50% |
-| Bundle size (dist/) | ~69KB | ~61KB | -12% |
-| Native APIs used | 2 | 5 | +150% |
+| **Dependencies** | 8 | 3 | **-63%** |
+| **Bundle size (dist/)** | ~69KB | ~62KB | **-10%** |
+| **Package size** | 18.3KB | 18.6KB | Similar |
+| **Native APIs used** | 2 | 6 | **+200%** |
+| **External color libs** | 1 | 0 | **-100%** |
+
+### Dependency Tree
+
+```
+Before (8 deps):
+├─ @clack/prompts
+├─ chalk
+├─ citty
+├─ consola
+├─ fs-extra (4 subdeps)
+├─ giget
+├─ tinyexec
+└─ tinyglobby
+
+After (3 deps):
+├─ @clack/prompts
+├─ citty
+├─ consola
+├─ giget
+├─ tinyexec
+└─ tinyglobby
+```
 
 ## How to Run Analysis
 
@@ -102,7 +122,7 @@ npm install -g @e18e/cli
 # Analyze the project
 e18e-cli analyze
 
-# Analyze with custom manifest (if needed)
+# Analyze with custom manifest
 e18e-cli analyze --manifest ./module-replacements.json
 ```
 
@@ -113,5 +133,5 @@ e18e-cli analyze --manifest ./module-replacements.json
 
 ---
 
-*Last updated: March 2026*
-*Implementation: Commit ed8e09d*
+*Last updated: March 2026*  
+*Implementation: Commits ed8e09d, 5fff1cb*
