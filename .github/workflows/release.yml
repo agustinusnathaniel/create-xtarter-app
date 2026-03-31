@@ -11,6 +11,7 @@ on:
 permissions:
   contents: write
   packages: write
+  id-token: write
 
 jobs:
   release:
@@ -55,6 +56,4 @@ jobs:
         run: pnpm prepublishOnly
 
       - name: Publish to npm
-        run: pnpm publish --access public --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: pnpm publish
