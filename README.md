@@ -174,7 +174,6 @@ node dist/cli.mjs test-app
 | Tool | Purpose |
 |------|---------|
 | [`@clack/prompts`](https://npmjs.com/package/@clack/prompts) | Interactive prompts |
-| [`chalk`](https://npmjs.com/package/chalk) | Terminal colors |
 | [`citty`](https://npmjs.com/package/citty) | Command-line argument parsing |
 | [`consola`](https://npmjs.com/package/consola) | Console logging |
 | [`giget`](https://npmjs.com/package/giget) | Template downloads |
