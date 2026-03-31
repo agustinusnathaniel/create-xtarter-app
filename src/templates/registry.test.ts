@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vite-plus/test';
 import { getTemplateById, getTemplateChoices, TEMPLATES } from '@/templates/registry';
 
 describe('Template Registry', () => {
