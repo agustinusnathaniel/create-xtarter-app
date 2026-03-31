@@ -1,8 +1,8 @@
 import { styleText } from 'node:util';
 
-export const APP_NAME = styleText('cyanBright', 'create-xtarter-app');
+export const APP_NAME: string = styleText('cyanBright', 'create-xtarter-app');
 
-export const BANNER = `
+export const BANNER: string = `
 ${styleText('cyanBright', '╔════════════════════════════════════════════╗')}
 ${styleText('cyanBright', '║')}                                        ${styleText('cyanBright', '║')}
 ${styleText('cyanBright', '║')}   ${styleText('bold', 'create-xtarter-app')}                    ${styleText('cyanBright', '║')}
@@ -38,7 +38,7 @@ export const SUPPORTED_PACKAGE_MANAGERS = {
   },
 } as const;
 
-export const HELP_TEXT = `
+export const HELP_TEXT: string = `
 ${styleText('bold', 'Usage:')}
   ${styleText('cyan', 'npx create-xtarter-app@latest')} [project-name] [options]
 
