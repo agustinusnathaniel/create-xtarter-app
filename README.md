@@ -1,3 +1,6 @@
+> [!WARNING]
+> This is the repository where initially `create-xtarter-app` was built. It now lives in xtarter stack repository: https://github.com/agustinusnathaniel/xtarter/main/apps/create-xtarter-app. 
+
 # create-xtarter-app
 
 > Fast project scaffolding for modern web apps
