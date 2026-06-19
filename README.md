@@ -1,5 +1,5 @@
 > [!WARNING]
-> This is the repository where initially `create-xtarter-app` was built. It now lives in xtarter stack repository: https://github.com/agustinusnathaniel/xtarter/main/apps/create-xtarter-app. 
+> This is the repository where initially `create-xtarter-app` was built. It now lives in xtarter stack repository: https://github.com/agustinusnathaniel/xtarter/tree/main/apps/create-xtarter-app. 
 
 # create-xtarter-app
 
